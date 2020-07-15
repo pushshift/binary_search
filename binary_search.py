@@ -28,6 +28,7 @@ def search_record(author):
     '''Returns record position if there is a match. Otherwise, returns False.'''
     total_seeks = 0
     author = author.lower()
+    author_len = len(author)
     NUM_RECORDS = FILE_SIZE / RECORD_SIZE
     record_pos = int(NUM_RECORDS / 2)
     r_bound = NUM_RECORDS
@@ -41,7 +42,7 @@ def search_record(author):
         pos = record_pos * RECORD_SIZE
         fh.seek(pos)
         record = fh.read(AUTHOR_FIELD_SIZE)
-        r_author = record.replace(b'\0',b'').decode().lower()
+        r_author = record[:author_len].decode().lower()
         if author == r_author:
             logging.debug(f"Found author at record position: {record_pos}.")
             return record_pos
