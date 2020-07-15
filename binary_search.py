@@ -2,9 +2,7 @@
 
 import sys
 import time
-import numpy as np
 import logging
-import psycopg2
 import os
 logging.basicConfig(level=logging.INFO)
 
