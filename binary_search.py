@@ -10,6 +10,7 @@ logging.basicConfig(level=logging.INFO)
 fh = open("authors.dat", "rb")
 FILE_SIZE = os.path.getsize("authors.dat")
 RECORD_SIZE = 44
+AUTHOR_FIELD_SIZE = 32
 
 def fetch_record(pos):
     '''Fetch a specific record'''
@@ -39,8 +40,8 @@ def search_record(author):
             return False
         pos = record_pos * RECORD_SIZE
         fh.seek(pos)
-        record = fh.read(RECORD_SIZE)
-        r_author = record[0:32].replace(b'\0',b'').decode().lower()
+        record = fh.read(AUTHOR_FIELD_SIZE)
+        r_author = record.replace(b'\0',b'').decode().lower()
         if author == r_author:
             logging.debug(f"Found author at record position: {record_pos}.")
             return record_pos
